@@ -29,6 +29,7 @@ function getAction() {
 ~ Select an action ~
 [1] Create a to-do item
 [2] Complete a to-do item
+[3] Uncomplete a completed to-do item
 > `)
         checkAction()
     }
@@ -40,6 +41,8 @@ function checkAction() {
         addList()
     } else if (action === 2) {
         complete()
+    } else if (action === 3) {
+        uncomplete()
     } else {
         action = +prompt(`
     ERROR: Invalid action.  Input 1 or 2 only.
@@ -72,14 +75,38 @@ function complete() {
     Which to-do item would you like to complete?
     > `)
     }
-    if(list[done-1].slice(0,3) === "[in"){
-        let newStr = list[done-1]
+    if (list[done - 1].slice(0, 3) === "[in") {
+        let newStr = list[done - 1]
         newStr = [...newStr]
-        newStr.splice(1,2)
-        list[done-1] = newStr.join('')
+        newStr.splice(1, 2)
+        list[done - 1] = newStr.join('')
         startup()
     } else {
         console.log(`That item has already been completed.`)
+        startup()
+    }
+}
+
+function uncomplete() {
+    let done = +prompt(`
+    ~ Uncompleting a completed to-do item ~
+    Which to-do item would you like to uncomplete?
+    > `)
+    while (done > list.length || done < 1 || isNaN(done) || done % 1 !== 0) {
+        done = +prompt(`
+    ERROR: Invalid item.  Input number of item to uncomplete.
+    ~ Uncompleting a completed to-do item ~
+    Which to-do item would you like to uncomplete?
+    > `)
+    }
+    if (list[done - 1].slice(0, 3) === "[co") {
+        let newStr = list[done - 1]
+        newStr = [...newStr]
+        newStr.splice(1, 0, "in")
+        list[done - 1] = newStr.join('')
+        startup()
+    } else {
+        console.log(`That item has not yet been completed.`)
         startup()
     }
 }
