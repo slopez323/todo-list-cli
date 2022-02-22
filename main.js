@@ -25,15 +25,15 @@ function getAction() {
     if (JSON.stringify(list) === "[]") {
         addList()
     } else {
-        action = +prompt(`
+        console.log(`
 ~ Select an action ~
 [1] Create a to-do item
 [2] Complete a to-do item
 [3] Uncomplete a completed to-do item
 [4] Delete a to-do item
 [5] Edit a to-do item
-[6] Quit Application
-> `)
+[6] Quit Application`)
+        action = +prompt(`> `)
         checkAction()
     }
 }
@@ -53,7 +53,7 @@ function checkAction() {
     } else if(action === 6) {
         process.exit()
     } else {
-        action = +prompt(`
+        console.log(`
 ERROR: Invalid action.  Input the correct number for the action.
 ~ Select an action ~
 [1] Create a to-do item
@@ -61,32 +61,32 @@ ERROR: Invalid action.  Input the correct number for the action.
 [3] Uncomplete a completed to-do item
 [4] Delete a to-do item
 [5] Edit a to-do item
-[6] Quit Application
-> `)
+[6] Quit Application`)
+        action = +prompt(`> `)
         checkAction()
     }
 }
 
 function addList() {
-    let add = prompt(`
+    console.log(`
 ~ Creating a new to-do item ~
-What is this to-do item called?
-> `)
+What is this to-do item called?`)
+    let add = prompt(`> `)
     list.push(`[incomplete] ${add}`)
     startup()
 }
 
 function complete() {
-    let item = +prompt(`
+    console.log(`
 ~ Completing a to-do item ~
-Which to-do item would you like to complete?
-> `)
+Which to-do item would you like to complete?`)
+    let item = +prompt(`> `)
     while (item > list.length || item < 1 || isNaN(item) || item % 1 !== 0) {
-        item = +prompt(`
+        console.log(`
 ERROR: Invalid item.  Input number of item to complete.
 ~ Completing a to-do item ~
-Which to-do item would you like to complete?
-> `)
+Which to-do item would you like to complete?`)
+        item = +prompt(`> `)
     }
     if (list[item - 1].slice(0, 3) === "[in") {
         let newStr = list[item - 1]
@@ -101,16 +101,16 @@ Which to-do item would you like to complete?
 }
 
 function uncomplete() {
-    let item = +prompt(`
+    console.log(`
 ~ Uncompleting a completed to-do item ~
-Which to-do item would you like to uncomplete?
-> `)
+Which to-do item would you like to uncomplete?`)
+    let item = +prompt(`> `)
     while (item > list.length || item < 1 || isNaN(item) || item % 1 !== 0) {
-        item = +prompt(`
+        console.log(`
 ERROR: Invalid item.  Input number of item to uncomplete.
 ~ Uncompleting a completed to-do item ~
-Which to-do item would you like to uncomplete?
-> `)
+Which to-do item would you like to uncomplete?`)
+        item = +prompt(`> `)
     }
     if (list[item - 1].slice(0, 3) === "[co") {
         let newStr = list[item - 1]
@@ -125,35 +125,35 @@ Which to-do item would you like to uncomplete?
 }
 
 function deleteItem() {
-    let item = +prompt(`
+    console.log(`
 ~ Deleting a to-do item ~
-Which to-do item would you like to delete?
-> `)
+Which to-do item would you like to delete?`)
+    let item = +prompt(`> `)
     while (item > list.length || item < 1 || isNaN(item) || item % 1 !== 0) {
-        item = +prompt(`
+        console.log(`
 ERROR: Invalid item.  Input number of item to delete.
 ~ Deleting a to-do item ~
-Which to-do item would you like to delete?
-> `)
+Which to-do item would you like to delete?`)
+        item = +prompt(`> `)
     }
     list.splice(item - 1, 1)
     startup()
 }
 
 function editItem() {
-    let item = +prompt(`
+    console.log(`
 ~ Editing a to-do item ~
-Which to-do item would you like to edit?
-> `)
+Which to-do item would you like to edit?`)
+    let item = +prompt(`> `)
     while (item > list.length || item < 1 || isNaN(item) || item % 1 !== 0) {
-        item = +prompt(`
+        console.log(`
 ERROR: Invalid item.  Input number of item to edit.
 ~ Editing a to-do item ~
-Which to-do item would you like to edit?
-> `)
+Which to-do item would you like to edit?`)
+        item = +prompt(`> `)
     }
-    let edit = prompt(`Editing item ${item}.  What would you like to call this to-do item?
-> `)
+    console.log(`Editing item ${item}.  What would you like to call this to-do item?`)
+    let edit = prompt(`> `)
     if (list[item - 1].slice(0, 3) === "[in") {
         list.splice(item - 1, 1, `[incomplete] ${edit}`)
     } else {
